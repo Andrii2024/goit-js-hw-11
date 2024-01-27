@@ -90,8 +90,8 @@ function createImageCard(image) {
   img.alt = image.tags;
 
   const commentDiv = document.createElement('div');
-  commentDiv.textContent = `Comments: ${comments},Likes: ${likes}, Views: ${views},Downloads: ${downloads}`;
   commentDiv.classList.add('comments');
+  commentDiv.textContent = `Comments: ${comments},Likes: ${likes}, Views: ${views},Downloads: ${downloads}`;
 
   card.appendChild(commentDiv);
   card.appendChild(link);
