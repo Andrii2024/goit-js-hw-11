@@ -9,9 +9,17 @@ const form = document.querySelector('.search-form');
 const gallery = document.querySelector('.gallery');
 const loader = document.querySelector('.loader');
 
+const lightbox = new SimpleLightbox('.gallery a', {
+  captionPosition: 'bottom',
+  captionDelay: 250,
+  captionsData: 'alt',
+  captions: true,
+});
+
 let searchQuery = '';
 
-form.addEventListener('submit', function (e) {
+form.addEventListener('submit', onSabmit);
+function onSabmit(e) {
   e.preventDefault();
   searchQuery = e.target.elements.search.value.trim();
   if (searchQuery) {
@@ -20,11 +28,19 @@ form.addEventListener('submit', function (e) {
     searchImages(searchQuery);
   }
   e.target.reset();
-});
+}
 
-function searchImages(query) {
-  const apiKey = '42003708-c000c9a8ce48958e4d2fbd571';
-  const url = `https://pixabay.com/api/?key=${apiKey}&q=${query}&image_type=photo&orientation=horizontal&safesearch=true`;
+function searchImages(q) {
+  const API_KEY = '42003708-c000c9a8ce48958e4d2fbd571';
+  const PARAMS = new URLSearchParams({
+    key: API_KEY,
+    q,
+    image_type: 'photo',
+    orientation: 'horizontal',
+    safesearch: true,
+  });
+  const BAS_EURL = 'https://pixabay.com/api';
+  const url = `${BAS_EURL}/?${PARAMS}`;
 
   return fetch(url)
     .then(response => response.json())
@@ -113,10 +129,3 @@ function showErrorMessage() {
     message: 'Something went wrong. Please try again later.',
   });
 }
-
-const lightbox = new SimpleLightbox('.gallery a', {
-  captionPosition: 'bottom',
-  captionDelay: 250,
-  captionsData: 'alt',
-  captions: true,
-});
